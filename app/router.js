@@ -16,6 +16,17 @@ module.exports = app => {
   router.delete('/v1/roles', controller.role.removes)
   router.resources('role', '/v1/roles', controller.role)
 
+
+  // fashion
+  // router.post('/api/role', controller.role.create)
+  // router.delete('/api/role/:id', controller.role.destroy)
+  // router.put('/api/role/:id', controller.role.update)
+  // router.get('/api/role/:id', controller.role.show)
+  // router.get('/api/role', controller.role.index)
+  router.delete('/v1/fashion', controller.fashion.removes)
+  router.resources('fashion', '/v1/fashions', controller.fashion)
+
+
   // auth
   router.post('auth', '/v1/auth/signin', controller.auth.signin)
   router.post('auth', '/v1/auth/signup', controller.auth.signup)
