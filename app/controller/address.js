@@ -1,34 +1,14 @@
 const Controller = require('egg').Controller
 
-class FashionController extends Controller {
+class AddressController extends Controller {
   constructor(ctx) {
     super(ctx)
 
-    this.createNews = {
-      actionName: { type: 'string', required: true, allowEmpty: false },
-      actionDesc: { type: 'string', required: true, allowEmpty: false },
-      image: { type: 'string', required: true, allowEmpty: false },
-      date: { type: 'date', required: true, allowEmpty: false },
-      add: { type: 'string', required: true, allowEmpty: false },
-
-      actionDetail: {
-        type: 'array',
-        itemType: 'object',
-        required: false,
-        rule: {
-          actionDesc: { type: 'string', required: true },
-         image: { type: 'string', required: true, default: 'http://btdxcx.com:3012/image/F2B6DA3A531A7C3E' }
-        }
-      },
-
-
-      // actionDetail:[{
-      //   actionDesc: { type: 'string', required: true },
-      //   image: { type: 'string', required: true, default: 'http://btdxcx.com:3012/image/F2B6DA3A531A7C3E' },
-      // }]
-
-      actionDetail: {type: 'array', required: false, allowEmpty: false},
-
+    this.createAdd = {
+      name: { type: 'string', required: true, allowEmpty: false },
+      phone: { type: 'string', required: true, allowEmpty: false },
+      isDefault: { type: 'boolean', required: false, allowEmpty: true },
+      address: { type: 'string', required: true, allowEmpty: false },
 
     }
 
@@ -38,11 +18,11 @@ class FashionController extends Controller {
   async create() {
     const { ctx, service } = this
     // 校验参数
-    ctx.validate(this.createNews)
+    ctx.validate(this.createAdd)
     // 组装参数
     const payload = ctx.request.body || {}
     // 调用 Service 进行业务处理
-    const res = await service.fashion.create(payload)
+    const res = await service.address.create(payload)
     // 设置响应内容和响应状态码
     ctx.helper.CREATED({ctx, res})
   }
@@ -53,7 +33,7 @@ class FashionController extends Controller {
     // 校验参数
     const { id } = ctx.params
     // 调用 Service 进行业务处理
-    await service.fashion.destroy(id)
+    await service.address.destroy(id)
     // 设置响应内容和响应状态码
     ctx.helper.NOCONTENT({ctx})
   }
@@ -62,12 +42,12 @@ class FashionController extends Controller {
   async update() {
     const { ctx, service } = this
     // 校验参数
-    ctx.validate(this.createNews)
+    ctx.validate(this.createAdd)
     // 组装参数
     const { id } = ctx.params
     const payload = ctx.request.body || {}
     // 调用 Service 进行业务处理
-    await service.fashion.update(id, payload)
+    await service.address.update(id, payload)
     // 设置响应内容和响应状态码
     ctx.helper.NOCONTENT({ctx})
   }
@@ -78,7 +58,7 @@ class FashionController extends Controller {
     // 组装参数
     const { id } = ctx.params
     // 调用 Service 进行业务处理
-    const res = await service.fashion.show(id)
+    const res = await service.address.show(id)
     // 设置响应内容和响应状态码
     ctx.helper.OK({ctx, res})
   }
@@ -89,7 +69,7 @@ class FashionController extends Controller {
     // 组装参数
     const payload = ctx.query
     // 调用 Service 进行业务处理
-    const res = await service.fashion.index(payload)
+    const res = await service.address.index(payload)
     // 设置响应内容和响应状态码
     ctx.helper.OK({ctx, res})
   }
@@ -102,7 +82,7 @@ class FashionController extends Controller {
     const { id } = ctx.request.body // {id: "5a452a44ab122b16a0231b42,5a452a3bab122b16a0231b41"}
     const payload = id.split(',') || []
     // 调用 Service 进行业务处理
-    const result = await service.fashion.removes(payload)
+    const result = await service.address.removes(payload)
     // 设置响应内容和响应状态码
     ctx.helper.NOCONTENT({ctx})
   }
@@ -110,4 +90,4 @@ class FashionController extends Controller {
 }
 
 
-module.exports = FashionController
+module.exports = AddressController
