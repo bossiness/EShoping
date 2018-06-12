@@ -60,6 +60,10 @@ module.exports = app => {
   router.resources('shop', '/v1/shops', controller.shopDetails)
   router.delete('/v1/shops', controller.shopDetails.removes)
 
+  // product
+  router.resources('shop', '/v1/products', controller.product)
+  router.delete('/v1/products', controller.product.removes)
+
   // upload
   router.post('/api/upload', controller.upload.create)
   router.post('/api/upload/url', controller.upload.url)

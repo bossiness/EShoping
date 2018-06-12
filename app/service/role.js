@@ -3,10 +3,10 @@ const Service = require('egg').Service
 class RoleService extends Service {
   // create======================================================================================================>
   async create(payload) {
-    return this.ctx.model.Role.create(payload) 
+    return this.ctx.model.Role.create(payload)
   }
 
-  // destroy======================================================================================================>  
+  // destroy======================================================================================================>
   async destroy(_id) {
     const { ctx, service } = this
     const role = await ctx.service.role.find(_id)
@@ -41,7 +41,7 @@ class RoleService extends Service {
     let res = []
     let total = 0
     let skip = Number(offset) || 0
-    let count = Number(limit) || 0
+    let count = Number(limit) || 20
     if(isPaging) {
       if(search) {
         res = await this.ctx.model.Role.find({name: { $regex: search } }).skip(skip).limit(count).sort({ createdAt: -1 }).exec()

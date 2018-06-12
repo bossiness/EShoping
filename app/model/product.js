@@ -25,7 +25,7 @@ module.exports = app => {
       options: [String]
     }],
     variants: [{
-      spu: { type: String, unique: true, required: true },
+      sku: { type: String, required: true },
       name: String,
       pricing: {
         current: Number,

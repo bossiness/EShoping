@@ -38,7 +38,7 @@ class ShopDetailsService extends Service {
     let res = []
     let total = 0
     let skip = Number(offset) || 0
-    let count = Number(limit) || 0
+    let count = Number(limit) || 20
     if(isPaging) {
       if(search) {
         res = await this.ctx.model.ShopDetails.find({name: { $regex: search } }).skip(skip).limit(count).sort({ createdAt: -1 }).exec()
