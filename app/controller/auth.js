@@ -41,7 +41,7 @@ class AuthController extends Controller {
 
   async signout () {
     const { ctx, service } = this
-    ctx.helper.notExtended({ctx})
+    ctx.helper.NOCONTENT({ctx})
   }
 
   async resetPsw () {

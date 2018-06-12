@@ -10,6 +10,7 @@ module.exports = app => {
       realName: { type: String, required: true },
       phone: { type: String },
       email: { type: String },
+      role: { type: mongoose.Schema.Types.ObjectId, ref: 'Role' },
       portrait: { type: String, default: 'https://s.gravatar.com/avatar/fd9e718afb3867cdd6afd990bb059af8?s=80'},
       createdAt: { type: Date, default: Date.now }
     })

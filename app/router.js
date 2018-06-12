@@ -52,13 +52,13 @@ module.exports = app => {
   router.put('/api/user/access/resetPsw', app.jwt, controller.userAccess.resetPsw)
 
   // user
-  // router.post('/api/user', controller.user.create)
-  // router.delete('/api/user/:id', controller.user.destroy)
-  // router.put('/api/user/:id', controller.user.update)
-  // router.get('/api/user/:id', controller.user.show)
-  // router.get('/api/user', controller.user.index)
-  router.delete('/api/user', controller.user.removes)
-  router.resources('user', '/api/user', controller.user)
+  router.delete('/v1/users', controller.adminUser.removes)
+  router.resources('user', '/v1/users', controller.adminUser)
+  router.get('/v1/user/me', app.jwt, controller.adminUser.current)
+
+  // shop
+  router.resources('shop', '/v1/shops', controller.shopDetails)
+  router.delete('/v1/shops', controller.shopDetails.removes)
 
   // upload
   router.post('/api/upload', controller.upload.create)
