@@ -56,6 +56,9 @@ module.exports = app => {
   router.resources('user', '/v1/users', controller.adminUser)
   router.get('/v1/user/me', app.jwt, controller.adminUser.current)
 
+  //taxons
+  router.resources('taxons', '/v1/taxons', controller.taxons)
+
   // shop
   router.resources('shop', '/v1/shops', controller.shopDetails)
   router.delete('/v1/shops', controller.shopDetails.removes)
