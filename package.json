@@ -13,6 +13,7 @@
     "egg-scripts": "^2.1.0",
     "egg-validate": "^1.0.0",
     "image-downloader": "^3.3.0",
+    "lodash": "^4.17.10",
     "mocha": "^4.0.1",
     "moment": "^2.20.1",
     "stream-to-array": "^2.3.0",

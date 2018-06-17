@@ -1,7 +1,7 @@
 
 module.exports = app => {
   const mongoose = app.mongoose
-  const conn = app.mongooseDB.get('desk');
+  const conn = app.mongooseDB.get('desk')
 
   const ShopDetailsSchema = new mongoose.Schema({
     name: { type: String, required: true },

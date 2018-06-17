@@ -1,6 +1,6 @@
 module.exports = app => {
   const mongoose = app.mongoose
-  const conn = app.mongooseDB.get('desk');
+  const conn = app.mongooseDB.get('desk')
 
   const ProductSchema = new mongoose.Schema({
     spu: { type: String, unique: true, required: true },

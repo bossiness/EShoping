@@ -1,6 +1,7 @@
-'use strict';
+'use strict'
 
-const Service = require('egg').Service;
+const Service = require('egg').Service
+const _ = require('lodash')
 
 class ProductService extends Service {
   async create(payload) {
@@ -39,10 +40,20 @@ class ProductService extends Service {
     let total = 0
     let skip = Number(offset) || 0
     let count = Number(limit) || 20
+
+    let require = payload
+    _.unset(require, 'offset')
+    _.unset(require, 'limit')
+    _.unset(require, 'isPaging')
+    _.unset(require, 'search')
+
     if(isPaging) {
       if(search) {
         res = await this.ctx.model.Product.find({name: { $regex: search } }).skip(skip).limit(count).sort({ createdAt: -1 }).exec()
         total = res.length
+      } else if (require) {
+        res = await this.ctx.model.Product.find(require).skip(skip).limit(count).sort({ createdAt: -1 }).exec()
+        total = await this.ctx.model.Product.count({}).exec()
       } else {
         res = await this.ctx.model.Product.find({}).skip(skip).limit(count).sort({ createdAt: -1 }).exec()
         total = await this.ctx.model.Product.count({}).exec()
@@ -51,6 +62,9 @@ class ProductService extends Service {
       if(search) {
         res = await this.ctx.model.Product.find({name: { $regex: search } }).sort({ createdAt: -1 }).exec()
         total = res.length
+      } else if (require) {
+        res = await this.ctx.model.Product.find(require).sort({ createdAt: -1 }).exec()
+        total = await this.ctx.model.Product.count({}).exec()
       } else {
         res = await this.ctx.model.Product.find({}).sort({ createdAt: -1 }).exec()
         total = await this.ctx.model.Product.count({}).exec()
@@ -76,4 +90,4 @@ class ProductService extends Service {
   }
 }
 
-module.exports = ProductService;
+module.exports = ProductService
