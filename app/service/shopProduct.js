@@ -52,39 +52,34 @@ class ShopProductService extends Service {
     _.unset(require, 'isPaging')
     _.unset(require, 'search')
 
-    if(isPaging) {
-      if(search) {
-        res = await this.ctx.model.ShopProduct.find({name: { $regex: search } }).populate('product')
-          .skip(skip).limit(count).sort({ createdAt: -1 }).exec()
-        total = res.length
-      } else if (require) {
-        res = await this.ctx.model.ShopProduct.find(require).populate('product')
-          .skip(skip).limit(count).sort({ createdAt: -1 }).exec()
-        total = await this.ctx.model.ShopProduct.count({}).exec()
-      } else {
-        res = await this.ctx.model.ShopProduct.find({}).populate('product')
-          .skip(skip).limit(count).sort({ createdAt: -1 }).exec()
-        total = await this.ctx.model.ShopProduct.count({}).exec()
-      }
+    if (search) {
+      const ids_res = await this.ctx.model.Product.find({name: { $regex: search } }, '_id').exec()
+      const ids = ids_res.map((e,i) => { return e._id })
+      res = await this.ctx.model.ShopProduct.find({product: { $in: ids}}).populate('product').exec()
     } else {
-      if(search) {
-        res = await this.ctx.model.ShopProduct.find({})
-          .populate({
-            path: 'product',
-            match: { name: { $regex: search }}
-          })
-          .sort({ createdAt: -1 }).exec()
-        total = res.length
-      } else if (require) {
-        res = await this.ctx.model.ShopProduct.find(require)
-          .populate('product')
-          .sort({ createdAt: -1 }).exec()
-        total = await this.ctx.model.ShopProduct.count({}).exec()
+      if(isPaging) {
+        if (require) {
+          res = await this.ctx.model.ShopProduct.find(require).populate('product')
+            .skip(skip).limit(count).sort({ createdAt: -1 }).exec()
+          total = await this.ctx.model.ShopProduct.count({}).exec()
+        } else {
+          res = await this.ctx.model.ShopProduct.find({}).populate('product')
+            .skip(skip).limit(count).sort({ createdAt: -1 }).exec()
+          total = await this.ctx.model.ShopProduct.count({}).exec()
+        }
       } else {
-        res = await this.ctx.model.ShopProduct.find({}).populate('product')
-          .sort({ createdAt: -1 }).exec()
-        total = await this.ctx.model.ShopProduct.count({}).exec()
+        if (require) {
+          res = await this.ctx.model.ShopProduct.find(require)
+            .populate('product')
+            .sort({ createdAt: -1 }).exec()
+          total = await this.ctx.model.ShopProduct.count({}).exec()
+        } else {
+          res = await this.ctx.model.ShopProduct.find({}).populate('product')
+            .sort({ createdAt: -1 }).exec()
+          total = await this.ctx.model.ShopProduct.count({}).exec()
+        }
       }
+
     }
 
     let data = res.map((e,i) => {
